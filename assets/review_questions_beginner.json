@@ -1,0 +1,25 @@
+[
+  {"id":"rev_beg_001","text":"தமிழில் 'வணக்கம்' என்பதன் பொருள் என்ன?","options":["Goodbye","Thank you","Hello","Sorry"],"correctIndex":2},
+  {"id":"rev_beg_002","text":"'வாழ்க்கை' என்ற சொல்லின் பொருள் என்ன?","options":["Life","Death","Work","Play"],"correctIndex":0},
+  {"id":"rev_beg_003","text":"தமிழ் எழுத்துக்கள் எத்தனை?","options":["26","18","12","247"],"correctIndex":3},
+  {"id":"rev_beg_004","text":"'நன்றி' என்பதன் ஆங்கிலம் என்ன?","options":["Please","Welcome","Thank you","Hello"],"correctIndex":2},
+  {"id":"rev_beg_005","text":"'சொல்' என்றால்?","options":["Sentence","Word","Letter","Paragraph"],"correctIndex":1},
+  {"id":"rev_beg_006","text":"'நீர்' என்பதற்கு சரியான பொருள் எது?","options":["Water","Fire","Earth","Wind"],"correctIndex":0},
+  {"id":"rev_beg_007","text":"'தன்' என்பதன் பொருள் எது?","options":["His","Her","Own","Their"],"correctIndex":2},
+  {"id":"rev_beg_008","text":"தமிழ் இசையில் பிரபலமான தாள சாதனம் எது?","options":["Violin","Mridangam","Guitar","Trumpet"],"correctIndex":1},
+  {"id":"rev_beg_009","text":"'பள்ளி' என்றால் என்ன?","options":["Hospital","School","Market","Temple"],"correctIndex":1},
+  {"id":"rev_beg_010","text":"தமிழ்நாடு தலைநகரம் எது?","options":["Chennai","Bengaluru","Hyderabad","Kolkata"],"correctIndex":0},
+  {"id":"rev_beg_011","text":"'அம்மா' என்பவர் யார்?","options":["Mother","Father","Sister","Brother"],"correctIndex":0},
+  {"id":"rev_beg_012","text":"'அப்பா' என்பவர் யார்?","options":["Teacher","Father","Friend","Neighbour"],"correctIndex":1},
+  {"id":"rev_beg_013","text":"'செல்வி' என்றால் என்ன?","options":["Mr.","Ms.","Dr.","Prof."],"correctIndex":1},
+  {"id":"rev_beg_014","text":"தமிழில் 'எண்ணெய்' என்பதை எப்படி எழுதுவர்?","options":["எண்ணெய்","எண்ணை","எண்ணாய்த்","எண்ணெட்"],"correctIndex":0},
+  {"id":"rev_beg_015","text":"'நாய்' என்பது என்ன?","options":["Cat","Dog","Bird","Fish"],"correctIndex":1},
+  {"id":"rev_beg_016","text":"'மலம்' என்பதன் பொருள் என்ன?","options":["Flower","Grass","Dung","Stone"],"correctIndex":2},
+  {"id":"rev_beg_017","text":"'நாள்' என்பதன் ஆங்கிலம் என்ன?","options":["Night","Day","Month","Year"],"correctIndex":1},
+  {"id":"rev_beg_018","text":"'மழை' என்பது எது?","options":["Sunshine","Rain","Wind","Snow"],"correctIndex":1},
+  {"id":"rev_beg_019","text":"'ஆண்' என்பதன் பொருள் எது?","options":["Male","Female","Child","Old person"],"correctIndex":0},
+  {"id":"rev_beg_020","text":"'பெண்' என்பதன் பொருள் எது?","options":["Male","Female","Teacher","Student"],"correctIndex":1},
+  {"id":"rev_beg_spl_001","text":"கீழ்க்காணும் செவ்வொலிகளை சரியாக வரிசைப்படுத்துக: 'க்', 'அ', 'ப' -> சரியான சொல் எது? (சில எழுத்து உறுபுகள்)","options":["அக் ப","பக் அ","அப் க","கப் அ"],"correctIndex":2},
+  {"id":"rev_beg_spl_002","text":"பின்வரும் சொற்களில் தவறான எழுத்து எது? 'படிப்பு' vs 'படி்பு' — சரியான எழுத்து யது?","options":["படிப்பு","படி்பு","படிப்பு","படிச்"],"correctIndex":0}
+]
+

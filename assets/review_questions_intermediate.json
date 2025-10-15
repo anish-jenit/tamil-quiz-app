@@ -1,0 +1,25 @@
+[
+  {"id":"rev_int_001","text":"பொதுவாக 'இலக்கியம்' என்றால் என்ன?","options":["Literature","Science","Mathematics","History"],"correctIndex":0},
+  {"id":"rev_int_002","text":"தமிழ் கவிஞர் திருவள்ளுவர் யார்?","options":["திருவள்ளுவர்","பொன்னன்","கலிகிரி","நான்வேர்"],"correctIndex":0},
+  {"id":"rev_int_003","text":"தமிழ் சினிமாவின் முக்கிய நகரம் எது?","options":["Chennai","Mumbai","Kochi","Kolkata"],"correctIndex":0},
+  {"id":"rev_int_004","text":"'பெரியார்' என்றால் புகழ்பெற்றவர் என்பதை குறிக்கிறதா?","options":["Low","Medium","High","Very High"],"correctIndex":3},
+  {"id":"rev_int_005","text":"'அகற்பகள்' என்ற சொல்லின் பொருள் என்ன?","options":["Unknown","Poems","Prose","Letters"],"correctIndex":1},
+  {"id":"rev_int_006","text":"தமிழ் இலக்கியம் எந்த காலத்திலிருந்து ஆரம்பித்தது?","options":["Sangam period","Medieval","Modern","Colonial"],"correctIndex":0},
+  {"id":"rev_int_007","text":"'பிறந்த நாள்' என்பதற்கு சரியான ஆங்கிலம் என்ன?","options":["Birthday","Anniversary","Festival","Holiday"],"correctIndex":0},
+  {"id":"rev_int_008","text":"'பரிசு' என்றால் என்ன?","options":["Gift","Punishment","Work","Home"],"correctIndex":0},
+  {"id":"rev_int_009","text":"'சுற்றுலா' என்றால் என்ன?","options":["Tourism","Study","Work","Trade"],"correctIndex":0},
+  {"id":"rev_int_010","text":"'அறிவு' என்ற சொல்லின் பொருள் என்ன?","options":["Knowledge","Strength","Power","Wealth"],"correctIndex":0},
+  {"id":"rev_int_011","text":"'அறிவியல்' என்பது எதை குறிக்கும்?","options":["Science","Literature","Art","Music"],"correctIndex":0},
+  {"id":"rev_int_012","text":"'இணையம்' என்றால் என்ன?","options":["Internet","Network","Road","Bridge"],"correctIndex":0},
+  {"id":"rev_int_013","text":"'பல்வேறு' என்ற சொல்லின் பொருள் என்ன?","options":["Various","Single","Few","None"],"correctIndex":0},
+  {"id":"rev_int_014","text":"'மக்களின் வாழ்வு' பற்றிய சொல் எது?","options":["Sociology","Economy","Politics","Culture"],"correctIndex":3},
+  {"id":"rev_int_015","text":"'அழகு' என்பதன் பொருள் என்ன?","options":["Beauty","Ugly","Strong","Weak"],"correctIndex":0},
+  {"id":"rev_int_016","text":"'வரலாறு' என்பதன் பொருள் என்ன?","options":["History","Future","Story","Myth"],"correctIndex":0},
+  {"id":"rev_int_017","text":"'விளையாட்டு' என்றால் என்ன?","options":["Sports","Work","Study","Rest"],"correctIndex":0},
+  {"id":"rev_int_018","text":"'கலை' என்பது எதை குறிக்கும்?","options":["Art","Science","Business","Medicine"],"correctIndex":0},
+  {"id":"rev_int_019","text":"'பதிவு' என்றால் என்ன?","options":["Record","Delete","Copy","Send"],"correctIndex":0},
+  {"id":"rev_int_020","text":"'திறமை' என்றால் என்ன?","options":["Talent","Money","Age","Height"],"correctIndex":0},
+  {"id":"rev_int_spl_001","text":"கீழ்க்காணும் சொற்களில் எது எழுத்து பிழை கொண்டது? 'மர', 'மார்', 'மாறு' — எந்தது தவறு?","options":["மர","மார்","மாறு","எல்லா சொற்களும் சரி"],"correctIndex":1},
+  {"id":"rev_int_spl_002","text":"'புத்தகம்' என்ற சொல்லின் சரியான எழுத்துப்பெயர் எந்தது?","options":["புத்தகம்","புத்தகம்்","புத்தக","புத்தகக்"],"correctIndex":0}
+]
+

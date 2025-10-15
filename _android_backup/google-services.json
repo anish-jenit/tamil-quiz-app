@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "119871439470",
+    "project_id": "com.example.tamil_quiz_app",
+    "storage_bucket": "activity-tracker-28ccf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119871439470:android:87917e4d351b95d2685c7f",
+        "android_client_info": {
+          "package_name": "Robin.Do"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ9S6_CI0V3p52Wc3EM7pNIIeQU8CpP4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119871439470:android:c14380d5c9a73908685c7f",
+        "android_client_info": {
+          "package_name": "com.example.tamil_quiz_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ9S6_CI0V3p52Wc3EM7pNIIeQU8CpP4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
