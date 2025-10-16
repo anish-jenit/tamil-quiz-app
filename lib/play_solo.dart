@@ -239,13 +239,13 @@ class _PlaySoloPageState extends State<PlaySoloPage> {
                 const SizedBox(height: 8),
                 ElevatedButton(
                   onPressed: () async {
-                      final messenger = ScaffoldMessenger.of(context);
-                      final did = await _promptSaveResult();
-                      if (!mounted) return;
-                      if (did) {
-                        messenger.showSnackBar(const SnackBar(content: Text('Result saved')));
-                      }
-                    },
+                    final messenger = ScaffoldMessenger.of(context);
+                    final did = await _promptSaveResult();
+                    if (!mounted) return;
+                    if (did) {
+                      messenger.showSnackBar(const SnackBar(content: Text('Result saved')));
+                    }
+                  },
                   child: const Text('Save Result'),
                 ),
                 const SizedBox(height: 8),
@@ -372,6 +372,7 @@ class _PlaySoloPageState extends State<PlaySoloPage> {
       floatingActionButton: kDebugMode
           ? FloatingActionButton.extended(
               onPressed: () async {
+                final messenger = ScaffoldMessenger.of(context);
                 final prefs = await SharedPreferences.getInstance();
                 final now = DateTime.now().toIso8601String();
                 final sample = {
@@ -394,7 +395,7 @@ class _PlaySoloPageState extends State<PlaySoloPage> {
                   await prefs.setStringList(key, parsed.map((m) => jsonEncode(m)).toList());
                 }
                 if (!mounted) return;
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Inserted debug leaderboard entries')));
+                messenger.showSnackBar(const SnackBar(content: Text('Inserted debug leaderboard entries')));
               },
               label: const Text('Insert Debug Scores'),
             )
