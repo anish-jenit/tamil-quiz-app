@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserProfile {
   final String userId;
   final String email;
@@ -16,30 +18,18 @@ class UserProfile {
   });
 
   factory UserProfile.fromMap(String id, Map<String, dynamic> data) {
-    // createdAt may be a Firestore Timestamp (when cloud_firestore is used),
-    // a ISO8601 string, or an int millis. Handle common cases defensively.
     final raw = data['createdAt'];
     DateTime createdAt;
-    if (raw == null) {
-      createdAt = DateTime.now();
-    } else if (raw is DateTime) {
-      createdAt = raw;
-    } else if (raw is int) {
-      createdAt = DateTime.fromMillisecondsSinceEpoch(raw);
+    if (raw is Timestamp) {
+      createdAt = raw.toDate();
     } else if (raw is String) {
       createdAt = DateTime.tryParse(raw) ?? DateTime.now();
+    } else if (raw is int) {
+      createdAt = DateTime.fromMillisecondsSinceEpoch(raw);
+    } else if (raw is DateTime) {
+      createdAt = raw;
     } else {
-      // Unknown shape (e.g., Firestore Timestamp). Try to access .toDate() safely.
-      try {
-        final dt = (raw as dynamic).toDate();
-        if (dt is DateTime) {
-          createdAt = dt;
-        } else {
-          createdAt = DateTime.now();
-        }
-      } catch (_) {
-        createdAt = DateTime.now();
-      }
+      createdAt = DateTime.now();
     }
 
     return UserProfile(
@@ -57,8 +47,6 @@ class UserProfile {
         'username': username,
         'house': house,
         'avatar': avatar,
-        // Store as ISO string by default. If you use Firestore you may want to
-        // convert to a Timestamp on write using package:cloud_firestore.
-        'createdAt': createdAt.toUtc().toIso8601String(),
+        'createdAt': Timestamp.fromDate(createdAt),
       };
 }

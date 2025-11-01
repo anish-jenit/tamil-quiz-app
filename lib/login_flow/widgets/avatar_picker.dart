@@ -5,7 +5,7 @@ class AvatarPicker extends StatelessWidget {
   final String? selected;
   final ValueChanged<String?> onChanged;
 
-  const AvatarPicker({Key? key, this.selected, required this.onChanged}) : super(key: key);
+  const AvatarPicker({super.key, this.selected, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {

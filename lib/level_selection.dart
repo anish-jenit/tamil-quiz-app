@@ -1,14 +1,7 @@
-import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'sample_questions.dart';
 import 'play_solo.dart';
-
-List<dynamic> _parseJson(String raw) {
-  return json.decode(raw) as List<dynamic>;
-}
-
+import 'services/questions_repository.dart';
 class LevelSelectionPage extends StatelessWidget {
   // mode can be 'solo', 'create_group', 'join_group' to adapt behavior
   final String mode;
@@ -20,11 +13,12 @@ class LevelSelectionPage extends StatelessWidget {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => PlaySoloPage(questions: questions, level: level)));
   }
 
-  Future<List<Question>> _loadFromAsset(String assetPath) async {
-    // Load raw JSON string from assets, then decode in a background isolate
-    final raw = await rootBundle.loadString(assetPath);
-    final List<dynamic> data = await compute(_parseJson, raw);
-    return data.map((e) => Question(id: e['id'] as String, text: e['text'] as String, options: List<String>.from(e['options'] as List<dynamic>), correctIndex: e['correctIndex'] as int)).toList();
+  Future<List<Question>> _loadFromAsset(String assetPathOrLevel) async {
+    // Accepts level names ('easy','intermediate','expert') or asset path fallback.
+    final level = assetPathOrLevel.contains('questions_')
+        ? (assetPathOrLevel.contains('beginner') ? 'easy' : assetPathOrLevel.contains('intermediate') ? 'intermediate' : 'expert')
+        : assetPathOrLevel;
+    return QuestionsRepository.load(level);
   }
 
   @override
@@ -78,11 +72,30 @@ class LevelSelectionPage extends StatelessWidget {
             const SizedBox(height: 12),
             ElevatedButton(
               onPressed: () async {
-                showDialog<void>(context: context, barrierDismissible: false, builder: (_) => const Center(child: CircularProgressIndicator()));
+                // Show an informative dialog while expert questions are prepared.
+                showDialog<void>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (ctx) => AlertDialog(
+                    title: const Text('Preparing expert questions'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Text('Expert questions are being prepared. This may take a few seconds.'),
+                        SizedBox(height: 12),
+                        Center(child: CircularProgressIndicator()),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+                    ],
+                  ),
+                );
+
                 try {
                   final qs = await _loadFromAsset('assets/questions_expert.json');
                   if (!context.mounted) return;
-                  Navigator.of(context).pop();
+                  if (Navigator.of(context).canPop()) Navigator.of(context).pop();
                   _start(context, qs, 'expert');
                 } catch (e, st) {
                   if (Navigator.of(context).canPop()) Navigator.of(context).pop();

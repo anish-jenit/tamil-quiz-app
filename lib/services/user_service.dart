@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user_profile.dart';
 
-/// Minimal stub of UserService used by the main app. Replace with a real
-/// Firestore-backed implementation when upgrading firebase packages.
 class UserService {
-  Future<bool> checkUsernameAvailable(String username) async => true;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<bool> checkUsernameAvailable(String username) async {
+    final doc = await _firestore.collection('usernames').doc(username.toLowerCase()).get();
+    return !doc.exists;
+  }
 
   Future<void> createUserProfile({
     required String userId,
@@ -12,13 +16,34 @@ class UserService {
     required String house,
     String? avatar,
   }) async {
-    // no-op for now
-    return;
+    final batch = _firestore.batch();
+    final userRef = _firestore.collection('users').doc(userId);
+    final usernameRef = _firestore.collection('usernames').doc(username.toLowerCase());
+
+    final profile = UserProfile(
+      userId: userId,
+      email: email,
+      username: username,
+      house: house,
+      avatar: avatar,
+      createdAt: DateTime.now(),
+    );
+
+    batch.set(userRef, profile.toMap());
+    batch.set(usernameRef, {'userId': userId});
+    await batch.commit();
   }
 
-  Future<UserProfile?> getUserProfile(String userId) async => null;
+  Future<UserProfile?> getUserProfile(String userId) async {
+    final doc = await _firestore.collection('users').doc(userId).get();
+    if (!doc.exists) return null;
+    return UserProfile.fromMap(doc.id, doc.data()!);
+  }
 
-  Stream<UserProfile?> watchUserProfile(String userId) async* {
-    yield null;
+  Stream<UserProfile?> watchUserProfile(String userId) {
+    return _firestore.collection('users').doc(userId).snapshots().map((snap) {
+      if (!snap.exists) return null;
+      return UserProfile.fromMap(snap.id, snap.data()!);
+    });
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'quiz_home.dart';
+import 'services/questions_repository.dart';
 import 'level_selection.dart';
 import 'create_group.dart';
 import 'join_group.dart';
@@ -19,6 +20,10 @@ Future<void> main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
   }
+
+  // Kick off background preloads for large assets so the expert level feels snappier
+  // when a user taps it from the level selection screen.
+  QuestionsRepository.preload('expert');
 
   runApp(const App());
 }

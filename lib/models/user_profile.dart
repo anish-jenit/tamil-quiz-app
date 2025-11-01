@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserProfile {
   final String userId;
   final String email;
@@ -18,26 +20,18 @@ class UserProfile {
   factory UserProfile.fromMap(String id, Map<String, dynamic> data) {
     final raw = data['createdAt'];
     DateTime createdAt;
-    if (raw == null) {
-      createdAt = DateTime.now();
-    } else if (raw is DateTime) {
-      createdAt = raw;
-    } else if (raw is int) {
-      createdAt = DateTime.fromMillisecondsSinceEpoch(raw);
+    if (raw is Timestamp) {
+      createdAt = raw.toDate();
     } else if (raw is String) {
       createdAt = DateTime.tryParse(raw) ?? DateTime.now();
+    } else if (raw is int) {
+      createdAt = DateTime.fromMillisecondsSinceEpoch(raw);
+    } else if (raw is DateTime) {
+      createdAt = raw;
     } else {
-      try {
-        final dt = (raw as dynamic).toDate();
-        if (dt is DateTime) {
-          createdAt = dt;
-        } else {
-          createdAt = DateTime.now();
-        }
-      } catch (_) {
-        createdAt = DateTime.now();
-      }
+      createdAt = DateTime.now();
     }
+
     return UserProfile(
       userId: id,
       email: data['email'] as String,
@@ -53,6 +47,8 @@ class UserProfile {
         'username': username,
         'house': house,
         'avatar': avatar,
-        'createdAt': createdAt.toUtc().toIso8601String(),
+        'createdAt': Timestamp.fromDate(createdAt),
       };
+
+  // Firestore-friendly map
 }
