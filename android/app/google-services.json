@@ -1,45 +1,36 @@
 {
   "project_info": {
-    "project_number": "119871439470",
-    "project_id": "activity-tracker-28ccf",
-    "storage_bucket": "activity-tracker-28ccf.firebasestorage.app"
+    "project_number": "109091643107",
+    "project_id": "tamil-quiz-app",
+    "storage_bucket": "tamil-quiz-app.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:119871439470:android:87917e4d351b95d2685c7f",
-        "android_client_info": {
-          "package_name": "Robin.Do"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAJ9S6_CI0V3p52Wc3EM7pNIIeQU8CpP4E"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:119871439470:android:c14380d5c9a73908685c7f",
+        "mobilesdk_app_id": "1:109091643107:android:92a7110866a5c760116fd6",
         "android_client_info": {
           "package_name": "com.example.tamil_quiz_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "109091643107-t66s7jsl4v52qg107qmcl3a0cpkikbju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAJ9S6_CI0V3p52Wc3EM7pNIIeQU8CpP4E"
+          "current_key": "AIzaSyAbDtmWfRdTvk-b3fsKYtJIF6G5VtULtPw"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109091643107-t66s7jsl4v52qg107qmcl3a0cpkikbju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

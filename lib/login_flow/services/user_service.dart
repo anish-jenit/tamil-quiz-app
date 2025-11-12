@@ -46,4 +46,21 @@ class UserService {
   return UserProfile.fromMap(snap.id, snap.data()!);
     });
   }
+
+  /// Update an existing user's profile. This intentionally does not touch the
+  /// `usernames` collection because username changes are not allowed in the
+  /// current UX. Only fields supplied (house/avatar) are written.
+  Future<void> updateUserProfile({
+    required String userId,
+    String? house,
+    String? avatar,
+  }) async {
+    final userRef = _firestore.collection('users').doc(userId);
+    final data = <String, dynamic>{};
+    if (house != null) data['house'] = house;
+    if (avatar != null) data['avatar'] = avatar;
+    if (data.isEmpty) return;
+    data['updatedAt'] = DateTime.now();
+    await userRef.update(data);
+  }
 }

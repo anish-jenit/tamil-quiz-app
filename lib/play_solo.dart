@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'dart:math';
 // imports kept minimal
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'login_flow/services/user_service.dart';
+import 'login_flow/screens/profile/profile_creation_screen.dart';
 import 'sample_questions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'leaderboard.dart';
@@ -64,7 +67,24 @@ class _PlaySoloPageState extends State<PlaySoloPage> {
 
   /// Prompts the user for a name and saves the result. Returns true if saved.
   Future<bool> _promptSaveResult() async {
+    // If the user is signed in and has a profile, use their username automatically.
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final us = UserService();
+      try {
+        final profile = await us.getUserProfile(user.uid);
+        if (profile != null && profile.username.trim() != '?') {
+          await _saveResult(profile.username, _score);
+          return true;
+        }
+        // else fall through to prompt for a name
+      } catch (_) {
+        // ignore and fall back to prompting
+      }
+    }
+
     final nameController = TextEditingController();
+    if (!mounted) return false;
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -76,6 +96,7 @@ class _PlaySoloPageState extends State<PlaySoloPage> {
         ],
       ),
     );
+    if (!mounted) return false;
     if (ok != true) return false;
     final name = nameController.text.trim();
     if (name.isEmpty) return false;
@@ -121,6 +142,34 @@ class _PlaySoloPageState extends State<PlaySoloPage> {
   void _restart() {
     // Don't call async work inside setState. Prepare a fresh round.
     _prepareRound();
+  }
+
+  Future<void> _signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Signed out')));
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sign out failed: $e')));
+    }
+  }
+
+  Future<void> _openProfile() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sign in to edit your profile')));
+      return;
+    }
+    final us = UserService();
+    try {
+      final profile = await us.getUserProfile(user.uid);
+      if (!mounted) return;
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProfileCreationScreen(userId: user.uid, email: user.email ?? '', userService: us, initialProfile: profile)));
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to open profile: $e')));
+    }
   }
 
   void _startTimer() {
@@ -219,7 +268,16 @@ class _PlaySoloPageState extends State<PlaySoloPage> {
   if (_index >= _roundQuestions.length) {
       // results
       return Scaffold(
-        appBar: AppBar(title: const Text('Results'), backgroundColor: cs.primary),
+        appBar: AppBar(
+          title: const Text('Results'),
+          backgroundColor: cs.primary,
+          actions: [
+            if (FirebaseAuth.instance.currentUser != null) ...[
+              IconButton(onPressed: _openProfile, icon: const Icon(Icons.person)),
+              IconButton(onPressed: _signOut, icon: const Icon(Icons.logout_rounded)),
+            ],
+          ],
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -293,6 +351,12 @@ class _PlaySoloPageState extends State<PlaySoloPage> {
         title: Text('Question ${_index + 1} / ${_roundQuestions.length}'),
         backgroundColor: cs.primary,
         elevation: 0,
+        actions: [
+          if (FirebaseAuth.instance.currentUser != null) ...[
+            IconButton(onPressed: _openProfile, icon: const Icon(Icons.person)),
+            IconButton(onPressed: _signOut, icon: const Icon(Icons.logout_rounded)),
+          ],
+        ],
       ),
       body: SafeArea(
         child: Padding(

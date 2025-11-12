@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'login_flow/services/user_service.dart';
+import 'login_flow/screens/profile/profile_creation_screen.dart';
+import 'login_flow/services/auth_service.dart';
+import 'login_flow/screens/auth/email_input_screen.dart';
 import 'sample_questions.dart';
 import 'play_solo.dart';
 import 'services/questions_repository.dart';
@@ -25,7 +30,47 @@ class LevelSelectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: const Text('Select Level'), backgroundColor: cs.primary),
+      appBar: AppBar(
+        title: const Text('Select Level'),
+        backgroundColor: cs.primary,
+        actions: [
+          IconButton(
+            tooltip: 'Edit profile',
+            icon: const Icon(Icons.person),
+            onPressed: () async {
+              final user = FirebaseAuth.instance.currentUser;
+              if (user == null) {
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Sign in to edit profile')));
+                return;
+              }
+              final us = UserService();
+              try {
+                final profile = await us.getUserProfile(user.uid);
+                if (!context.mounted) return;
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProfileCreationScreen(userId: user.uid, email: user.email ?? '', userService: us, initialProfile: profile)));
+              } catch (e) {
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to open profile: $e')));
+              }
+            },
+          ),
+          IconButton(
+            tooltip: 'Sign out',
+            icon: const Icon(Icons.logout_rounded),
+            onPressed: () async {
+              try {
+                await AuthService().signOut();
+                if (!context.mounted) return;
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => EmailInputScreen(authService: AuthService())));
+              } catch (e) {
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sign out failed: $e')));
+              }
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
