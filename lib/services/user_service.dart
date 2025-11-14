@@ -29,8 +29,9 @@ class UserService {
       createdAt: DateTime.now(),
     );
 
-    batch.set(userRef, profile.toMap());
-    batch.set(usernameRef, {'userId': userId});
+  batch.set(userRef, profile.toMap());
+  // store uid field to match Firestore security rules (request.auth.uid)
+  batch.set(usernameRef, {'uid': userId});
     await batch.commit();
   }
 

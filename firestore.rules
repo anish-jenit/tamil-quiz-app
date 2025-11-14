@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // helper
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    match /users/{userId} {
+      // allow anyone to read public profiles
+      allow get, list: if true;
+
+      // allow create only for signed-in user matching path
+      allow create: if isSignedIn()
+                    && request.auth.uid == userId
+                    // must include required fields and simple types
+                    && request.resource.data.keys().hasAll(['username', 'house', 'avatar'])
+                    && request.resource.data.username is string
+                    && request.resource.data.username.size() > 0;
+
+      // allow update only for the same authenticated user and prevent username changes
+      allow update: if isSignedIn()
+                    && request.auth.uid == userId
+                    // username remains unchanged
+                    && (resource.data.username == request.resource.data.username)
+                    // allow only avatar/house change otherwise
+                    && (request.resource.data.keys().hasAll(['username', 'house', 'avatar']) ||
+                        request.resource.data.keys().hasOnly(['username', 'house', 'avatar']));
+
+      allow delete: if false;
+    }
+
+    match /usernames/{username} {
+      // username -> uid mapping doc
+      allow get, list: if true;
+
+      // create only if signed-in, mapping uid equals request.auth.uid, and doc doesn't already exist
+      allow create: if isSignedIn()
+                    && request.resource.data.uid == request.auth.uid
+                    && !exists(/databases/$(database)/documents/usernames/$(username));
+
+      // prevent changing the uid once set
+      allow update: if isSignedIn()
+                    && resource.data.uid == request.auth.uid
+                    && request.resource.data.uid == resource.data.uid;
+
+      allow delete: if false;
+    }
+  }
+}
